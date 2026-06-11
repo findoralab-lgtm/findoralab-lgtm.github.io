@@ -1,6 +1,29 @@
-git clone https://github.com/findoralab-lgtm/findoralab-lgtm.github.io.git
-cd findoralab-lgtm.github.io
-# положи сюда inject.js и index.html
-git add inject.js index.html
-git commit -m "Добавить inject.js и index.html"
-git push origin main
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Чат</title>
+</head>
+<body>
+  <!-- Инициализация виджета -->
+  <script>
+    window.botpressWebChat = window.botpressWebChat || {};
+    window.botpressWebChat.init = window.botpressWebChat.init || function(){};
+    window.botpressWebChat.init({
+      host: "https://studio.botpress.cloud", /* или ваш host */
+      botId: "4a1e325a-2e1d-4098-a682-c46f8673aa68",
+      showWidget: true,
+      composerPlaceholder: "Опишите ваш запрос..."
+    });
+  </script>
+
+  <!-- Подключение inject.js (файл должен быть в корне репо) -->
+  <script src="https://findoralab-lgtm.github.io/inject.js"></script>
+
+  <div style="font-family:Arial, sans-serif; padding:20px;">
+    <h3>Чат</h3>
+    <p>Если виджет не открылся автоматически — посмотрите правый нижний угол.</p>
+  </div>
+</body>
+</html>

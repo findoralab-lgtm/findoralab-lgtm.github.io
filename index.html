@@ -1,26 +1,44 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Чат</title>
-</head>
-<body>
-  <h3>Тестовая страница</h3>
-  <p>Если вы видите эту страницу — index.html работает.</p>
+// inject.js — самодостаточный
+(function () {
+  console.log('[inject.js] загружен с GitHub Pages');
 
-  <script>
-    // Инициализация виджета (пример)
-    window.botpressWebChat = window.botpressWebChat || {};
-    window.botpressWebChat.init = window.botpressWebChat.init || function(){};
-    window.botpressWebChat.init({
-      host: "https://studio.botpress.cloud", 
-      botId: "4a1e325a-2e1d-4098-a682-c46f8673aa68",
-      showWidget: true
-    });
-  </script>
+  var config = {
+    host: "https://studio.botpress.cloud",
+    botId: "4a1e325a-2e1d-4098-a682-c46f8673aa68",
+    showWidget: true
+  };
 
-  <!-- Подключаем inject.js из корня сайта -->
-  <script src="/inject.js"></script>
-</body>
-</html>
+  // Создаём контейнер конфигурации, чтобы CDN мог его прочитать
+  window.botpressWebChat = window.botpressWebChat || {};
+  window.botpressWebChat.init = window.botpressWebChat.init || function () {};
+  // Попытка установить конфиг (необязательная, но полезная)
+  try { window.botpressWebChat.init(config); } catch (e) { /* ok */ }
+
+  var cdnSrc = "https://cdn.botpress.cloud/webchat/v0/inject.js";
+
+  function loadCdnAndInit() {
+    if (document.querySelector('script[src="' + cdnSrc + '"]')) {
+      console.log('[inject.js] CDN-скрипт уже присутствует');
+      return;
+    }
+    var s = document.createElement('script');
+    s.src = cdnSrc;
+    s.async = true;
+    s.onload = function () {
+      console.log('[inject.js] CDN загружен');
+      // На всякий случай — вызвать init ещё раз, когда CDN загрузится
+      try { window.botpressWebChat.init(config); } catch (e) { console.warn('[inject.js] init после загрузки CDN:', e); }
+    };
+    s.onerror = function (err) {
+      console.error('[inject.js] не удалось загрузить CDN', err);
+    };
+    document.head.appendChild(s);
+  }
+
+  // Небольшая задержка/защита, чтобы DOM успел
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadCdnAndInit);
+  } else {
+    loadCdnAndInit();
+  }
+})();

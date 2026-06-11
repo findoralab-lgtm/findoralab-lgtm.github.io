@@ -1,6 +1,26 @@
-git clone https://github.com/findoralab-lgtm/findoralab-lgtm.github.io.git
-cd findoralab-lgtm.github.io
-# отредактируйте index.html локально (например в редакторе)
-git add index.html
-git commit -m "Fix index.html — put proper HTML"
-git push origin main
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Чат</title>
+</head>
+<body>
+  <h3>Тестовая страница</h3>
+  <p>Если вы видите эту страницу — index.html работает.</p>
+
+  <script>
+    // Инициализация виджета (пример)
+    window.botpressWebChat = window.botpressWebChat || {};
+    window.botpressWebChat.init = window.botpressWebChat.init || function(){};
+    window.botpressWebChat.init({
+      host: "https://studio.botpress.cloud", 
+      botId: "4a1e325a-2e1d-4098-a682-c46f8673aa68",
+      showWidget: true
+    });
+  </script>
+
+  <!-- Подключаем inject.js из корня сайта -->
+  <script src="/inject.js"></script>
+</body>
+</html>

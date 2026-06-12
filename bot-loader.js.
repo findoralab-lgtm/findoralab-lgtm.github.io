@@ -1,17 +1,16 @@
-// inject.js
-console.log('inject.js загружен с GitHub Pages');
+// bot-loader.js
+console.log('bot-loader.js загружен с GitHub Pages');
 
 (function loadBotpress(){
-  // Замените host и botId на ваши значения
   const config = {
     host: "https://studio.botpress.cloud",
-    botId: "ВАШ_BOT_ID_ЗДЕСЬ",
+    botId: "4a1e325a-2e1d-4098-a682-c46f8673aa68",
     showWidget: true
   };
 
   const cdnUrl = "https://cdn.botpress.cloud/webchat/v0/inject.js";
 
-  // Если CDN уже загружен — просто инициализируем
+  // Если CDN уже загружен — инициализируем
   if (window.botpressWebChat && window.botpressWebChat.init) {
     try {
       window.botpressWebChat.init(config);
@@ -22,10 +21,11 @@ console.log('inject.js загружен с GitHub Pages');
     return;
   }
 
-  // Иначе — динамически подгружаем CDN
+  // Динамически подгружаем CDN скрипт
   const s = document.createElement('script');
   s.src = cdnUrl;
   s.async = true;
+
   s.onload = function () {
     console.log('botpress CDN загружен');
     try {
@@ -39,8 +39,10 @@ console.log('inject.js загружен с GitHub Pages');
       console.error('botpress: ошибка init после загрузки CDN', e);
     }
   };
+
   s.onerror = function (err) {
     console.error('botpress: не удалось загрузить CDN', err);
   };
+
   document.head.appendChild(s);
 })();

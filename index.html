@@ -15,7 +15,7 @@
       script.async = true;
 
       script.onload = function() {
-        // Ждем, пока window.botpressWebChat станет доступен
+        // Подождём, пока ботпессовский объект станет доступен
         (function waitForBotpress() {
           if (window.botpressWebChat && typeof window.botpressWebChat.init === 'function') {
             window.botpressWebChat.init({

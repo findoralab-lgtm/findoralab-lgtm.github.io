@@ -8,22 +8,30 @@
   <h1>Содержимое страницы</h1>
 
   <script>
-    // Создаем тег script, чтобы загрузить библиотеку
-    var script = document.createElement('script');
-    script.src = "https://cdn.botpress.cloud/webchat/v3.6/inject.js";
+    // Загружаем библиотеку Botpress
+    (function() {
+      var script = document.createElement('script');
+      script.src = "https://cdn.botpress.cloud/webchat/v3.6/inject.js";
+      script.async = true;
 
-    // Когда скрипт загрузится — инициализируем виджет
-    script.onload = function() {
-      window.botpressWebChat.init({
-        clientId: "1b2b8490-8eb3-4c3d-8e91-75182baff95b",
-        messagingUrl: "https://messaging.botpress.cloud",
-        hostUrl: "https://cdn.botpress.cloud/webchat/v3.6",
-        showWidget: true
-      });
-    };
+      script.onload = function() {
+        // Ждем, пока window.botpressWebChat станет доступен
+        (function waitForBotpress() {
+          if (window.botpressWebChat && typeof window.botpressWebChat.init === 'function') {
+            window.botpressWebChat.init({
+              clientId: "1b2b8490-8eb3-4c3d-8e91-75182baff95b",
+              messagingUrl: "https://messaging.botpress.cloud",
+              hostUrl: "https://cdn.botpress.cloud/webchat/v3.6",
+              showWidget: true
+            });
+          } else {
+            setTimeout(waitForBotpress, 50);
+          }
+        })();
+      };
 
-    // Добавляем скрипт в страницу
-    document.body.appendChild(script);
+      document.body.appendChild(script);
+    })();
   </script>
 </body>
 </html>

@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <title>Моя страница с Botpress</title>
-  <!-- При желании можно добавить data URI favicon, чтобы избежать 404 -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' fill='%23ffffff'/%3E%3C/svg%3E" />
+  <!-- Можно добавить favicon, если нужно -->
 </head>
 <body>
   <h1>Содержимое страницы</h1>
 
+  <!-- Задайте clientId для этого проекта (один файл для всех страниц, можно менять) -->
   <script>
-    // Обязательно задайте clientId для вашего виджета
     window.__bpBridgeConfig = {
-      clientId: "YOUR-CLIENT-ID-HERE" // замените на ваш реальный clientId
+      clientId: "YOUR-CLIENT-ID-HERE" // замените на свой реальный clientId
     };
   </script>
 
-  <script src="/public/js/botpress-bridge.js"></script>
+  <!-- Подключаем мостик -->
+  <script src="/js/botpress-bridge.js"></script>
 </body>
 </html>

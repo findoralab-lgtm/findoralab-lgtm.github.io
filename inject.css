@@ -1,0 +1,2 @@
+/* inject.css — локальная заглушка, импортирующая реальные стили с CDN */
+@import url("https://cdn.botpress.cloud/webchat/v0/inject.css");

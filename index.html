@@ -3,35 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <title>Моя страница с Botpress</title>
+  <!-- При желании можно добавить data URI favicon, чтобы избежать 404 -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' fill='%23ffffff'/%3E%3C/svg%3E" />
 </head>
 <body>
   <h1>Содержимое страницы</h1>
 
   <script>
-    // Загружаем библиотеку Botpress
-    (function() {
-      var script = document.createElement('script');
-      script.src = "https://cdn.botpress.cloud/webchat/v3.6/inject.js";
-      script.async = true;
-
-      script.onload = function() {
-        // Подождём, пока ботпессовский объект станет доступен
-        (function waitForBotpress() {
-          if (window.botpressWebChat && typeof window.botpressWebChat.init === 'function') {
-            window.botpressWebChat.init({
-              clientId: "1b2b8490-8eb3-4c3d-8e91-75182baff95b",
-              messagingUrl: "https://messaging.botpress.cloud",
-              hostUrl: "https://cdn.botpress.cloud/webchat/v3.6",
-              showWidget: true
-            });
-          } else {
-            setTimeout(waitForBotpress, 50);
-          }
-        })();
-      };
-
-      document.body.appendChild(script);
-    })();
+    // Обязательно задайте clientId для вашего виджета
+    window.__bpBridgeConfig = {
+      clientId: "YOUR-CLIENT-ID-HERE" // замените на ваш реальный clientId
+    };
   </script>
+
+  <script src="/public/js/botpress-bridge.js"></script>
 </body>
 </html>

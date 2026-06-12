@@ -8,9 +8,21 @@ console.log('bot-loader.js загружен с GitHub Pages');
     showWidget: true
   };
 
-  const cdnUrl = "https://cdn.botpress.cloud/webchat/v0/inject.js";
+  const cdnBase = "https://cdn.botpress.cloud/webchat/v0";
+  const cssUrl = cdnBase + "/inject.css";
+  const jsUrl  = cdnBase + "/inject.js";
 
-  // Если CDN уже загружен — инициализируем
+  // 1) Явно добавляем CSS с CDN (если ещё нет)
+  if (!document.querySelector('link[href="' + cssUrl + '"]')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = cssUrl;
+    link.crossOrigin = 'anonymous';
+    document.head.appendChild(link);
+    console.log('botpress: вставлен CSS из CDN ->', cssUrl);
+  }
+
+  // 2) Если библиотека уже загружена — сразу инициализируем
   if (window.botpressWebChat && window.botpressWebChat.init) {
     try {
       window.botpressWebChat.init(config);
@@ -21,11 +33,11 @@ console.log('bot-loader.js загружен с GitHub Pages');
     return;
   }
 
-  // Динамически подгружаем CDN скрипт
+  // 3) Динамически подгружаем CDN скрипт
   const s = document.createElement('script');
-  s.src = cdnUrl;
+  s.src = jsUrl;
   s.async = true;
-
+  s.crossOrigin = 'anonymous';
   s.onload = function () {
     console.log('botpress CDN загружен');
     try {
@@ -39,10 +51,8 @@ console.log('bot-loader.js загружен с GitHub Pages');
       console.error('botpress: ошибка init после загрузки CDN', e);
     }
   };
-
   s.onerror = function (err) {
     console.error('botpress: не удалось загрузить CDN', err);
   };
-
   document.head.appendChild(s);
 })();
